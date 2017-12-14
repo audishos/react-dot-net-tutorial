@@ -25,6 +25,21 @@ class CommentBox extends React.Component {
             });
     }
 
+    handleCommentSubmit(comment) {
+        debugger;
+        fetch(this.props.submitUrl, {
+            method: 'POST',
+            body: JSON.stringify(comment)
+        })
+            .then(() => {
+                const newData = data.push(comment);
+                this.setState({
+                    ...this.state,
+                    data: newData
+                });
+            })
+    }
+
     componentWillMount() {
         this.loadCommentsFromServer();
         //window.setInterval(this.loadCommentsFromServer, this.props.pollInterval);
@@ -35,7 +50,7 @@ class CommentBox extends React.Component {
             <div className="commentBox">
                 <h1>Comments</h1>
                 <CommentList data={this.state.data} />
-                <CommentForm />
+                <CommentForm onCommentSubmit={e => this.handleCommentSubmit(e)} />
             </div>
         );
     };
@@ -78,7 +93,12 @@ class CommentForm extends React.Component {
         if (!author || !text) {
             return;
         }
-        // TODO: send request to server
+
+        this.props.onCommentSubmit({
+            Author: author,
+            Text: text
+        });
+
         this.setState({
             ...this.state,
             author: '',
@@ -127,7 +147,7 @@ class Comment extends React.Component {
 }
 
 ReactDOM.render(
-    <CommentBox url="/comments" pollInterval={2000} />,
+    <CommentBox url="/comments" submitUrl="/comments/new" pollInterval={2000} />,
     document.getElementById('content')
 );
 
