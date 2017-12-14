@@ -71,19 +71,36 @@ class CommentForm extends React.Component {
         });
     }
 
+    handleSubmit(e) {
+        e.preventDefault();
+        const author = this.state.author.trim();
+        const text = this.state.text.trim();
+        if (!author || !text) {
+            return;
+        }
+        // TODO: send request to server
+        this.setState({
+            ...this.state,
+            author: '',
+            text: ''
+        });
+    }
+
     render() {
         return (
-            <form className="commentForm">
+            <form className="commentForm" onSubmit={e => this.handleSubmit(e)}>
                 <input
                     type="text"
                     name="author"
                     onChange={e => this.handleChange(e)}
-                    placeholder="Your name" />
+                    placeholder="Your name"
+                    value={this.state.author} />
                 <input
                     type="text"
                     name="text"
                     onChange={e => this.handleChange(e)}
-                    placeholder="Say something..." />
+                    placeholder="Say something..."
+                    value={this.state.text} />
                 <input type="submit" value="Post" />
             </form>
         );
