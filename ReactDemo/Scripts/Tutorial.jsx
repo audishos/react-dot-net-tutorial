@@ -27,7 +27,7 @@ class CommentBox extends React.Component {
 
     componentWillMount() {
         this.loadCommentsFromServer();
-        window.setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+        //window.setInterval(this.loadCommentsFromServer, this.props.pollInterval);
     }
 
     render() {
@@ -55,11 +55,37 @@ class CommentList extends React.Component {
 }
 
 class CommentForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            author: '',
+            text: ''
+        };
+    }
+
+    handleChange(e) {
+        e.preventDefault();
+        this.setState({
+            ...this.state,
+            [e.target.name]: e.target.value
+        });
+    }
+
     render() {
         return (
-            <div className="commentForm">
-                Hello, world! I am a CommentForm.
-            </div>
+            <form className="commentForm">
+                <input
+                    type="text"
+                    name="author"
+                    onChange={e => this.handleChange(e)}
+                    placeholder="Your name" />
+                <input
+                    type="text"
+                    name="text"
+                    onChange={e => this.handleChange(e)}
+                    placeholder="Say something..." />
+                <input type="submit" value="Post" />
+            </form>
         );
     };
 }
