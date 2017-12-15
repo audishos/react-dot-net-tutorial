@@ -22,22 +22,38 @@ class CommentBox extends React.Component {
                     ...this.state,
                     data: data
                 });
+            })
+            .catch((err) => {
+                console.error(err);
             });
     }
 
     handleCommentSubmit(comment) {
-        debugger;
-        fetch(this.props.submitUrl, {
+        const requestDetails = {
             method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(comment)
-        })
+        };
+
+        console.log(requestDetails);
+
+        fetch(this.props.submitUrl, requestDetails)
             .then(() => {
-                const newData = data.push(comment);
+                comment.Id = this.state.data.length + 1;
                 this.setState({
                     ...this.state,
-                    data: newData
+                    data: [
+                        ...this.state.data,
+                        comment
+                    ]
                 });
             })
+            .catch((err) => {
+                console.error(err);
+            });
     }
 
     componentWillMount() {
