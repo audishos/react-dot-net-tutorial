@@ -146,7 +146,7 @@ class CommentForm extends React.Component {
 class Comment extends React.Component {
     rawMarkup() {
         const md = new Remarkable();
-        const rawMarkup = md.render(this.props.children.toString());
+        const rawMarkup = this.props.children ? md.render(this.props.children.toString()) : null;
         return { __html: rawMarkup };
     }
 
