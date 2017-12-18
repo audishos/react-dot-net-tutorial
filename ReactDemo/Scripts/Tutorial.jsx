@@ -61,7 +61,6 @@ class CommentBox extends React.Component {
             ...this.state,
             data: this.props.initialData
         });
-        // this.loadCommentsFromServer();
     }
 
     render() {
@@ -164,9 +163,3 @@ class Comment extends React.Component {
         );
     };
 }
-
-//ReactDOM.render(
-//    <CommentBox url="/comments" submitUrl="/comments/new" pollInterval={2000} />,
-//    document.getElementById('content')
-//);
-
