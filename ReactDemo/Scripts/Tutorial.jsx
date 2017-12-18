@@ -56,9 +56,12 @@ class CommentBox extends React.Component {
             });
     }
 
-    componentWillMount() {
-        this.loadCommentsFromServer();
-        //window.setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+    componentDidMount() {
+        this.setState({
+            ...this.state,
+            data: this.props.initialData
+        });
+        // this.loadCommentsFromServer();
     }
 
     render() {
@@ -162,8 +165,8 @@ class Comment extends React.Component {
     };
 }
 
-ReactDOM.render(
-    <CommentBox url="/comments" submitUrl="/comments/new" pollInterval={2000} />,
-    document.getElementById('content')
-);
+//ReactDOM.render(
+//    <CommentBox url="/comments" submitUrl="/comments/new" pollInterval={2000} />,
+//    document.getElementById('content')
+//);
 
